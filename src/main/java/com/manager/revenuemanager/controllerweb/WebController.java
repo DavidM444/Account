@@ -1,26 +1,33 @@
 package com.manager.revenuemanager.controllerweb;
 
-import com.manager.revenuemanager.Account;
-import com.manager.revenuemanager.User;
-import com.manager.revenuemanager.balance.Balance;
+
+import com.manager.revenuemanager.model.entitys.Detail;
+import com.manager.revenuemanager.model.services.DetailService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 public class WebController {
-
+    @Autowired
+    private DetailService service;
     @GetMapping("/")
     public String index(Model model){
-        model.addAttribute("content", "home :: content" );
         return "index";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/movements")
     public String login(Model model){
-        model.addAttribute("contentFragment", "login :: content");
-        return "login";
+        String attribute = "details";
+
+        model.addAttribute(attribute, service.obtainData());
+        return "history";
     }
 
     @GetMapping("/balance")
@@ -31,27 +38,7 @@ public class WebController {
         model.addAttribute("nombre", nombre);
         return "balance";
     }
-    @GetMapping("/home")
-    public String home(
-            Model model){
-        User user = new User();
-        Account account = new Account(user);
-        Balance balance = new Balance(account);
 
-        model.addAttribute("actualBalance", String.valueOf(balance.obtainBalance()));
-        return "home";
-    }
 
-//    @GetMapping("/prueba")
-//    public String showPrueba(Model model){
-//        model.addAttribute("content", "frag :: navbar");
-//        return "prueba";
-//
-//    }
-//    @GetMapping("/prueba/p1")
-//    public  String showp1(Model model){
-//        System.out.println("ruta p1");
-//        model.addAttribute("navbar", "frag :: navbar");
-//        return "prueba";
-//    }
+
 }
