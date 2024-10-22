@@ -17,6 +17,10 @@ import java.util.UUID;
 @Table(name = "users")
 public class User {
 
+    public static void setUserInstance(User userInstance) {
+        User.userInstance = userInstance;
+    }
+
     private static User userInstance;
 
     @Id

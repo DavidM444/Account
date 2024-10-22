@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoadUserAccountObject {
 
+    private static Account accountDbInstance;
+
     @Autowired
     private UserRepository repository;
 
@@ -23,9 +25,19 @@ public class LoadUserAccountObject {
             User user = User.getInstance();
             User user1 = repository.save(user);
 
+            // setear instancia de usuario para trabajar con singleton
+            //User.setUserInstance(user1);
             Account account = Account.getInstance();
             account.setUserId(user1);
-            accountRepository.save(account);
+            accountDbInstance = accountRepository.save(account);
+            System.out.println("db instance "+accountDbInstance.toString());
         }
+    }
+
+    public static Account getAccountDbInstance(){
+        if(accountDbInstance.getUserId().getUid() ==null){
+            throw new RuntimeException("User not Found with ID: " + User.getInstance().getUid());
+        }
+        return accountDbInstance;
     }
 }

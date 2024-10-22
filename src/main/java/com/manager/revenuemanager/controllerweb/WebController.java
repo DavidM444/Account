@@ -8,10 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class WebController {
@@ -19,15 +18,25 @@ public class WebController {
     private DetailService service;
     @GetMapping("/")
     public String index(Model model){
+        model.addAttribute("detail", new Detail());
         return "index";
     }
 
     @GetMapping("/movements")
     public String login(Model model){
+        model.addAttribute("detail", new Detail());
         String attribute = "details";
-
         model.addAttribute(attribute, service.obtainData());
         return "history";
+    }
+
+    @PostMapping("/register")
+    public String saveUser(Model model,@ModelAttribute Detail detail){
+        Detail detailToSave = new Detail(detail.getDescription(),detail.getAmountHistory());
+        System.out.println("Model de usuario " +detail.toString());
+        service.saveDetail(detailToSave);
+        model.addAttribute("detail", new Detail());
+        return "index";
     }
 
     @GetMapping("/balance")
@@ -38,7 +47,4 @@ public class WebController {
         model.addAttribute("nombre", nombre);
         return "balance";
     }
-
-
-
 }
