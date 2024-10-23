@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @Controller
 public class WebController {
@@ -46,5 +45,11 @@ public class WebController {
         model.addAttribute("content", "balance :: content");
         model.addAttribute("nombre", nombre);
         return "balance";
+    }
+
+    @PostMapping("/items/delete/{id}")
+    public String deleteItem(@PathVariable UUID id) {
+        service.deleteItemById(id);
+        return "redirect:/movements"; // Redirige a la lista de items
     }
 }
