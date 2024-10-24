@@ -2,10 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="frag::head"></head>
 <body>
-<header th:replace="frag::navbar"></header>
 <main class="container">
-    <h1>Inicio desde el index</h1>
-    <h3>Crear detalle</h3>
+    <header th:replace="frag::navbar"></header>
+
+    <section>
+        <h3>Saldo Actual: <span th:text="${saldo}"></span></h3>
+    </section>
+    <h3 style="color:darkseagreen;">Crear detalle</h3>
 
     <form th:action="@{/register}" th:object="${detail}" method="post">
     <div class="input-group mb-3">
@@ -15,11 +18,18 @@
     </div>
     <div class="input-group mb-3">
         <span class="input-group-text">Monto</span>
-        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" th:field="*{amountHistory}">
+        <input step="0.01" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" th:field="*{amountHistory}">
         <span class="input-group-text">$</span>
     </div>
+        <div class="mb-3">
+            <select th:field="*{tipo}">
+                <option value="retiro">Retiro</option>
+                <option value="deposito">Deposito</option>
+            </select>
+
+        </div>
     <div>
-        <button type="submit" class="btn-primary">Save</button>
+        <button type="submit" class="btn btn-success">Save</button>
     </div>
     </form>
 
