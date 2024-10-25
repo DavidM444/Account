@@ -1,10 +1,9 @@
 package com.manager.revenuemanager.controllerweb;
 
 
-import com.manager.revenuemanager.model.entitys.Detail;
+import com.manager.revenuemanager.model.entitys.*;
 import com.manager.revenuemanager.model.services.DetailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,25 +16,31 @@ public class WebController {
     private DetailService service;
     @GetMapping("/")
     public String index(Model model){
-        model.addAttribute("detail", new Detail());
+        model.addAttribute("detail", new DetailTransaccion());
+        model.addAttribute("saldo", Account.getInstance().getAmount_account());
         return "index";
     }
 
     @GetMapping("/movements")
-    public String login(Model model){
-        model.addAttribute("detail", new Detail());
+    public String showHistory(Model model){
         String attribute = "details";
         model.addAttribute(attribute, service.obtainData());
         return "history";
     }
 
     @PostMapping("/register")
-    public String saveUser(Model model,@ModelAttribute Detail detail){
+    public String saveUser(Model model,@ModelAttribute DetailTransaccion detail) throws Exception {
         Detail detailToSave = new Detail(detail.getDescription(),detail.getAmountHistory());
-        System.out.println("Model de usuario " +detail.toString());
         service.saveDetail(detailToSave);
-        model.addAttribute("detail", new Detail());
-        return "index";
+        System.out.println("Model de usuario " +detail.toString());
+
+        AccountManager manager = new AccountManager(Account.getInstance());
+        MoneyManager moneyManager = new MoneyManager(String.valueOf(detail.getAmountHistory()));
+        //logica para ingresar o sacar saldo de la cuenta
+        if(!manager.realizarOperacion(moneyManager.convertoBigDecimal(), detail.getTipo())){
+            throw new Exception("Argumentos para el tipo de Transaccion: NO VALIDOS.");
+        }
+        return "redirect:/";
     }
 
     @GetMapping("/balance")
@@ -50,6 +55,6 @@ public class WebController {
     @PostMapping("/items/delete/{id}")
     public String deleteItem(@PathVariable UUID id) {
         service.deleteItemById(id);
-        return "redirect:/movements"; // Redirige a la lista de items
+        return "redirect:/movements";
     }
 }
