@@ -4,37 +4,56 @@
 <body>
 <main class="container">
     <header th:replace="frag::navbar"></header>
-
     <section>
-        <h3>Saldo Actual: <span th:text="${saldo}"></span></h3>
+        <h3>Saldo Actual: $<span th:text="${saldo}"></span></h3>
     </section>
     <h3 style="color:darkseagreen;">Crear detalle</h3>
 
     <form th:action="@{/register}" th:object="${detail}" method="post">
     <div class="input-group mb-3">
-        <span class="input-group-text">Descripcion</span>
+        <span class="input-group-text">Descripción</span>
         <input type="text" aria-label="description detalle" class="form-control" th:field="*{description}">
 
     </div>
     <div class="input-group mb-3">
         <span class="input-group-text">Monto</span>
-        <input step="0.01" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" th:field="*{amountHistory}">
         <span class="input-group-text">$</span>
+        <input step="0.01" type="text" id="input-valor" class="form-control" aria-label="Amount (to the nearest dollar)" oninput="formatearPesos(this)" th:field="*{amountHistory}">
+
     </div>
         <div class="mb-3">
-            <select th:field="*{tipo}">
+            <select class="form-select" th:field="*{tipo}">
                 <option value="retiro">Retiro</option>
-                <option value="deposito">Deposito</option>
+                <option value="deposito">Depósito</option>
             </select>
 
         </div>
     <div>
-        <button type="submit" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-success">Guardar</button>
     </div>
     </form>
 
 </main>
 <footer th:replace="frag::footer"></footer>
+<script>
+ function formatearPesos(input) {
+    // Obtener el valor del input
+    let valor = input.value;
+
+    // Eliminar cualquier carácter que no sea un número (para evitar problemas)
+    valor = valor.replace(/[^0-9]/g, '');
+
+    // Convertir el valor a un número entero y luego formatearlo con separadores de miles
+    let valorFormateado = new Intl.NumberFormat('es-CO', {
+        currency: 'COP',
+        minimumFractionDigits: 0
+    }).format(valor);
+
+    // Actualizar el valor del input con el valor formateado
+    input.value = valorFormateado;
+}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
+
 </html>
