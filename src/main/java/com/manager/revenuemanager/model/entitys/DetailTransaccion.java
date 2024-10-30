@@ -18,15 +18,11 @@ public class DetailTransaccion extends Detail{
         this.tipo = tipo;
     }
 
-    public DetailTransaccion(UUID deId, Account detailAccountId, LocalDate dateHistory, Double amountHistory, String description, String tipo) {
-        super(deId, detailAccountId, dateHistory, amountHistory, description);
+    public DetailTransaccion(UUID deId, Account detailAccountId, LocalDate dateHistory, String amountHistory, String description, String tipo) {
+        super(deId, detailAccountId, dateHistory, MoneyManager.convertoBigDecimal(amountHistory), description);
         this.tipo = tipo;
     }
 
-    public DetailTransaccion(String description, Double amountHistory, String tipo) {
-        super(description, amountHistory);
-        this.tipo = tipo;
-    }
 
     @Override
     public String toString() {
