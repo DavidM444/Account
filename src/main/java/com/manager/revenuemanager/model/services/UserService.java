@@ -18,8 +18,12 @@ public class UserService {
     private User findUserById(UUID uuid){
         return repository.findById(uuid).orElseThrow(RuntimeException::new);
     }
+    private User getUserByPassword(String password){
+        return repository.findByClave(password);
+    }
 
     private void saveUser(User user){
         repository.save(user);
     }
+
 }

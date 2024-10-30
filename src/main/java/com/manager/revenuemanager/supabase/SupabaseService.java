@@ -1,11 +1,11 @@
 package com.manager.revenuemanager.supabase;
 
+import com.manager.revenuemanager.model.entitys.DetailTransaccion;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -38,9 +38,12 @@ public class SupabaseService {
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET,entity, String.class);
         return response.getBody();
+
     }
 
     public static void loadSupabaseCredentials() {
+
+        DetailTransaccion de = new DetailTransaccion();
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream("src/main/resources/supabase.properties"));
@@ -67,5 +70,6 @@ class Llamada{
         System.out.println("Data ---- "+service.getData());
         System.out.println("ddd "+service.doPeticion());
     }
+
 
 }

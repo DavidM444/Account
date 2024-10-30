@@ -1,5 +1,4 @@
 package com.manager.revenuemanager.model.entitys;
-
 import java.math.BigDecimal;
 
 public class AccountManager {
@@ -16,6 +15,7 @@ public class AccountManager {
             System.out.println("despues de transaccion: "+accountInstance.getAmount_account());
             return true;
         }
+
         if (tipo.equals("deposito")){
             System.out.println("depositando "+saldo);
             accountInstance.addSaldo(saldo);

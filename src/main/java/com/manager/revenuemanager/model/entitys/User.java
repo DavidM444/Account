@@ -12,12 +12,11 @@ import java.util.UUID;
 
 @Getter
 @Entity
-@ToString
 @AllArgsConstructor
 @Table(name = "users")
 public class User {
 
-    public static void setUserInstance(User userInstance) {
+    private static void setUserInstance(User userInstance) {
         User.userInstance = userInstance;
     }
 
@@ -42,11 +41,26 @@ public class User {
     public User(){}
     public static User getInstance(){
         if(userInstance == null){
-            return new User("David","Muñoz","fakepassword2000", LocalDate.now().minusYears(2));
+            userInstance = new User("David","Muñoz","fakepassword2000", LocalDate.now().minusYears(2));
         }
         return userInstance;
     }
 
+    public static void setUserToInstanceDb(User userFromDb){
+        if(userInstance.getUid() == null){
+            setUserInstance(userFromDb);
+        }
+    }
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", clave='" + clave + '\'' +
+                ", date_created=" + date_created +
+                '}';
+    }
 
     @Override
     public boolean equals(Object obj) {

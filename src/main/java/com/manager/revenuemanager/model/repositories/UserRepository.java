@@ -7,4 +7,5 @@ import org.springframework.data.repository.Repository;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository< User, UUID> {
+    User findByClave(String password);
 }
