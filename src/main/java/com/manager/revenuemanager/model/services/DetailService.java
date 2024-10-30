@@ -1,6 +1,8 @@
 package com.manager.revenuemanager.model.services;
 
 import com.manager.revenuemanager.model.entitys.Detail;
+import com.manager.revenuemanager.model.entitys.DetailDto;
+import com.manager.revenuemanager.model.entitys.MoneyManager;
 import com.manager.revenuemanager.model.repositories.DetailRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,5 +37,11 @@ public class DetailService {
 
     public void deleteItemById(UUID id) {
         repository.deleteById(id);
+    }
+
+    public Detail convertToDetail(DetailDto detailDto){
+        Detail detail = new Detail();
+        detail.setAmountHistory(MoneyManager.convertoBigDecimal(detailDto.getAmount()));
+        return detail;
     }
 }

@@ -27,7 +27,7 @@ public class WebController {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("detail", new DetailTransaccion());
+        model.addAttribute("detail", new DetailDto());
         model.addAttribute("saldo", MoneyManager.convertoString(Account.getInstance().getAmount_account()));
         return "index";
     }
@@ -40,13 +40,15 @@ public class WebController {
     }
 
     @PostMapping("/register")
-    public String saveUser(Model model, @ModelAttribute @NonNull DetailTransaccion detail) throws Exception {
-        System.out.println("Model de usuario " + detail.toString());
+    public String saveUser(Model model, @ModelAttribute @NonNull DetailDto detailDto) throws Exception {
 
+
+        Detail detail = service.convertToDetail(detailDto);
+        System.out.println("Model de usuario " + detail.toString());
         AccountManager manager = new AccountManager(Account.getInstance());
         MoneyManager moneyManager = new MoneyManager(String.valueOf(detail.getAmountHistory()));
         //logica para ingresar o sacar saldo de la cuenta
-        boolean resultOperation = manager.realizarOperacion(moneyManager.convertoBigDecimal(), detail.getTipo());
+        boolean resultOperation = manager.realizarOperacion(moneyManager.convertoBigDecimal(), detailDto.getTipo());
         if (!resultOperation) {
             throw new SaldoInsuficienteException("Argumentos para el tipo de Transacción: NO VALIDOS.");
         }
