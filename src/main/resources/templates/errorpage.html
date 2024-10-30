@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="frag::head"></head>
+<body>
+<article class="container" style="background-color: darkseagreen;  margin-top:1rem; border-radius:10px;" >
+    <h1>Algo salió mal.</h1>
+    <h3>Ha ocurrido un error:</h3>
+    <p th:text="${error}"></p>
+    <a class="btn btn-success mb-3" th:href="@{/}">Regresar</a>
+</article>
+</body>
+</html>
