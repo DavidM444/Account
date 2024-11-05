@@ -1,9 +1,9 @@
 package com.manager.revenuemanager.model.entitys;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.LinkedList;
@@ -44,6 +44,9 @@ public class Account {
     public Account() {
     }
 
+    // Usar cuando tenga una relación bidireccional entre dos entidades, ya que genera ciclos de serializacion, generadno
+    //bucles entre las entidades, donde una referencia la otra y viceversa. Usar JsonIgnore en la relacion inversa para evitar la serializacion de ese campo
+    @JsonIgnore
     @OneToMany(mappedBy = "detailAccountId", fetch = FetchType.LAZY) //no usar y mejor retonar los datos de forma manual
     List<Detail> listDetails = new LinkedList<>();
 
