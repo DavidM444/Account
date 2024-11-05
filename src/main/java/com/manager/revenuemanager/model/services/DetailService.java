@@ -7,6 +7,8 @@ import com.manager.revenuemanager.model.repositories.DetailRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,8 +28,8 @@ public class DetailService {
         return  response;
     }
 
-    public Page<Detail> page(int page, int size ){
-        Pageable pageable = PageRequest.of(page,size);
+    public Page<Detail> pageDetail(int page){
+        Pageable pageable = PageRequest.of(page-1, 7, Sort.by("dateHistory").descending());
         return repository.findAll(pageable);
     }
 
@@ -40,8 +42,9 @@ public class DetailService {
     }
 
     public Detail convertToDetail(DetailDto detailDto){
-        Detail detail = new Detail();
-        detail.setAmountHistory(MoneyManager.convertoBigDecimal(detailDto.getAmount()));
-        return detail;
+        return new Detail(
+                detailDto.getDescription(),
+                MoneyManager.convertoBigDecimal(detailDto.getAmountHistory()));
     }
 }
+
