@@ -28,7 +28,7 @@ public class Detail {
     public Detail(String description, BigDecimal amountHistory){
         this.description = description;
         this.amountHistory = amountHistory;
-        this.dateHistory = LocalDate.now().minusYears(3);
+        this.dateHistory = LocalDate.now();
         //Use DB instance to persist Detail Object
         this.detailAccountId = Account.getInstance();
     }
