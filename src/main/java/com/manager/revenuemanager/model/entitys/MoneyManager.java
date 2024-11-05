@@ -24,13 +24,13 @@ public class MoneyManager {
         String valorSinMiles = saldo.replace(".","");
 
         System.out.println("valor cambiado: "+valorSinMiles +" "+saldo);
-        return new BigDecimal(saldo);
+        return new BigDecimal(valorSinMiles);
     }
 
     public static String convertoString(BigDecimal bigDecimal){
         formatSaldo.setCurrency(currency);
      //definimos el formateador con moneda COP
-        String formmatedBalance =formatSaldo.format(bigDecimal);
+        String formmatedBalance = formatSaldo.format(bigDecimal);
         return formmatedBalance.replace("$","");
     }
 
