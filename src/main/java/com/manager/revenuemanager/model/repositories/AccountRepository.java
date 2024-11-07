@@ -18,16 +18,10 @@ public interface AccountRepository extends CrudRepository<Account, UUID> {
     @Transactional(readOnly = true)
     Account findAccount(@Param("id") UUID id);
 
-
-//    @Query("SELECT COUNT(a) FROM Account a")
-//    @Transactional
-//    long count();
-
-    // crear metodo para que actualice el valor del amount de la cuenta luego de cada agregacion de un detail.
-    @Modifying //indica que es una cosulta como update o delete
+    @Modifying //indica que es una consulta como update o delete
     @Query("UPDATE Account a SET a.amount_account = :amount WHERE a.account_id = :id")
     @Transactional
-    void setAmountById(@Param("amount")BigDecimal amount, @Param("id") UUID id);
+    void setAmountById(@Param("amount") BigDecimal amount, @Param("id") UUID id);
 
     @Query("SELECT a FROM Account a WHERE a.userId.uid = :userid")
     @Transactional(readOnly = true)
