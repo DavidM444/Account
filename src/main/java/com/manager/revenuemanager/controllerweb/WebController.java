@@ -6,6 +6,10 @@ import com.manager.revenuemanager.model.entitys.*;
 import com.manager.revenuemanager.model.repositories.AccountRepository;
 import com.manager.revenuemanager.model.services.DetailService;
 import io.micrometer.common.lang.NonNull;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +38,7 @@ public class WebController {
     public String index(Model model) {
         model.addAttribute("detail", new DetailDto());
         model.addAttribute("saldo", MoneyManager.convertoString(Account.getInstance().getAmount_account()));
+        model.addAttribute("total",MoneyManager.convertoString(service.getTotalAmountHistory()));
         return "index";
     }
 
@@ -45,7 +51,6 @@ public class WebController {
 
     @PostMapping("/register")
     public String saveUser(Model model, @ModelAttribute @NonNull DetailDto detailDto) throws Exception {
-
 
         Detail detail = service.convertToDetail(detailDto);
         System.out.println("Model de usuario " + detail.toString());
