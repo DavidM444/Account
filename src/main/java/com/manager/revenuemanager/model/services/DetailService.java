@@ -36,18 +36,18 @@ public class DetailService {
         return  response;
     }
 
-    @Cacheable(value = "detail")
+    //@Cacheable(value = "detail")
     public Page<Detail> pageDetail(int page){
         Pageable pageable = PageRequest.of(page-1, 7, Sort.by("dateHistory").descending());
         return repository.findAll(pageable);
     }
 
-    @CacheEvict(value = "detail", allEntries = true)
+    //@CacheEvict(value = "detail", allEntries = true)
     public void saveDetail(Detail detail) {
         repository.save(detail);
     }
 
-    @Cacheable(value = "listdetail")
+    @Cacheable(cacheNames = "detail")
     public List<Detail> getAllDetailData(){
 
         System.out.println("obteniendo datos sin cachear");
