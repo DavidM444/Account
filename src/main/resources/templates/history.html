@@ -13,6 +13,7 @@
 
 
 
+
     </style>
 </head>
 <body>
@@ -38,14 +39,12 @@
             </li>
         </ul>
         <ul class="list-group list-group-horizontal">
-
-
             <ul class="list-group  list-group-horizontal">
-                <li class="list-group-item active" aria-current="true">
+                <li class="list-group-item active" aria-current="true" style="background-color: transparent;">
                     <span
                             th:each="i: ${#numbers.sequence(1, totalPages)}">
       <a th:if="${pageActual != i}" th:href="@{'/movements?page=__${i}__'}">[[${i}]]</a>
-      <span th:unless="${pageActual != i}">[[${i}]]</span>
+      <span th:unless="${pageActual != i}" style="background: yellow; color:black;">[[${i}]]</span>
     </span></li>
 
                 <li class="list-group-item">
@@ -68,7 +67,6 @@
          class="fa fa-step-forward">next</a>
       <span th:unless="${pageActuale < totalPages}" title="Next" class="fa fa-step-forward">next</span>
     </span></li>
-
                 <li class="list-group-item">
                     <span>
       <a th:if="${pageActual < totalPages}" th:href="@{'/movements?page=__${totalPages}__'}" title="Last"

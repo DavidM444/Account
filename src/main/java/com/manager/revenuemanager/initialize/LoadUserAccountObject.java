@@ -33,16 +33,10 @@ public class LoadUserAccountObject {
         if(Account.getInstance().getAccount_id() == null || User.getInstance().getUid()==null){
             loadEntityDb();
         }
-
-
     }
     void saveUserAndAccountData(){
         User userDb = repository.save(User.getInstance());
         User.setUserToInstanceDb(userDb);
-
-        // setear instancia de usuario para trabajar con singleton
-        //User.setUserInstance(user1);
-
         Account accountDbInstance = accountRepository.save(Account.getInstance());
         Account.setToAccountDbInstance(accountDbInstance);
         System.out.println("db instance "+accountDbInstance.toString());
@@ -50,6 +44,6 @@ public class LoadUserAccountObject {
 
     public void loadEntityDb(){
         User.setUserToInstanceDb(repository.findByClave(User.getInstance().getClave())) ;
-        Account.setToAccountDbInstance(accountRepository.getAccountDb(User.getInstance().getUid())); ;
+        Account.setToAccountDbInstance(accountRepository.getAccountDb(User.getInstance().getUid()));
     }
 }

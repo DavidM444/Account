@@ -39,3 +39,5 @@ test/
 src/main/java/com/manager/rvenuemanager/supabase/SupabaseService.java
 /src/main/java/com/manager/revenuemanager/controllerweb/DetailPage.java
 /src/main/java/com/manager/revenuemanager/supabase/SupabaseService.java
+/src/main/java/com/manager/revenuemanager/supabase/Supabase.java
+/src/main/java/com/manager/revenuemanager/config/RedisConfig.java
