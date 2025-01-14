@@ -1,26 +1,100 @@
-# Gestor de Entradas y Gastos de Dinero
+# Gestor de Finanzas Personales
 
-Este proyecto es una aplicación sencilla desarrollada en Java para registrar y gestionar entradas y gastos de dinero. Está diseñado para permitir a los usuarios llevar un control básico de sus finanzas personales.
+Una aplicación web robusta desarrollada con Spring Boot para gestionar finanzas personales, permitiendo el registro y seguimiento de transacciones financieras.
 
-## Características
+## Características Principales
 
-- Registro de entradas de dinero.
-- Registro de gastos de dinero.
-- Listado de todos los registros con su categoría y monto.
-- Resumen del balance general.
+- **Gestión de Transacciones**
+  - Registro de ingresos y gastos
+  - Validación de saldo disponible para retiros
+  - Historial de transacciones paginado
+  - Descripción detallada para cada movimiento
 
-## Requisitos previos
+- **Persistencia de Datos**
+  - Integración con PostgreSQL vía Supabase
+  - Caché con Redis para optimizar consultas frecuentes
+  - Manejo de transacciones con JPA/Hibernate
 
-Asegúrate de tener instalado lo siguiente en tu sistema:
+- **Interfaz de Usuario**
+  - Vista de saldo actual
+  - Historial de movimientos paginado
+  - Formulario para registro de transacciones
+  - Manejo de errores con páginas personalizadas
 
-- **Java JDK 17 o superior**
-- **Maven** (opcional, si el proyecto utiliza dependencias)
+## Tecnologías Utilizadas
 
-## Instalación y Ejecución
+- **Backend**
+  - Java 17+
+  - Spring Boot
+  - Spring Data JPA
+  - Spring Cache
+  - Lombok
 
-1. **Clona el repositorio**:
+- **Base de Datos**
+  - PostgreSQL (Supabase)
+  - Redis (Caché)
+
+- **Frontend**
+  - Thymeleaf
+  - HTML/CSS
+
+## Requisitos Previos
+
+- JDK 17 o superior
+- Maven
+- Redis Server
+- Credenciales de Supabase
+
+## Configuración
+
+1. **Clonar el repositorio**
    ```bash
    git clone <URL-del-repositorio>
-   cd <nombre-del-repositorio>
-2. **Carga las dependencias**
-3. **Si usas IntelliJ o Eclipse, ejecuta la clase:**  *RevenuemanagerApplication*
+   cd <nombre-del-directorio>
+   ```
+
+2. **Configurar credenciales de Supabase**
+   - Crear archivo `src/main/resources/supabase.properties`
+   - Agregar las siguientes propiedades:
+     ```properties
+     SB_URL=<tu-url-supabase>
+     SB_USER=<tu-usuario>
+     SB_PASS=<tu-contraseña>
+     ```
+
+3. **Configurar Redis**
+   - Asegurarse de que Redis está corriendo en el puerto por defecto (6379)
+
+## Ejecución
+
+1. **Compilar el proyecto**
+   ```bash
+   mvn clean install
+   ```
+
+2. **Ejecutar la aplicación**
+   ```bash
+   mvn spring-boot:run
+   ```
+   O ejecutar `RevenuemanagerApplication.java` desde tu IDE
+
+La aplicación estará disponible en `http://localhost:8080`
+
+## Estructura del Proyecto
+
+- `model/`: Entidades y lógica de negocio
+- `controller/`: Controladores web
+- `repository/`: Interfaces de acceso a datos
+- `service/`: Servicios de negocio
+- `config/`: Configuraciones de Spring
+- `exception/`: Manejo de excepciones personalizado
+
+## Contribuciones
+
+Las contribuciones son bienvenidas. Por favor, asegúrate de:
+
+1. Hacer fork del repositorio
+2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit de tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abrir un Pull Request
